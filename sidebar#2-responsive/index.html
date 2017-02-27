@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Задание</title>
+	<link rel="stylesheet" href="css/style.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript" ></script>
+
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			// Клик на элемент по которому и будет совершаться
+			// действие открытие и закрытие sidebar
+			$('.icon-menu').click(function(e) {
+				// Класс sidebar
+				var sidebar = $('.sidebar');
+				// Ширина sidebar
+				var sidebarWidth = $('.sidebar').width();
+				// Добавляем класс active
+				$('.header, .content').addClass('active');
+
+				// Проверяем, если в sidebar свойство left не равна ширины его то выполняються
+				// следующие действия
+				if (sidebar.css('left') != sidebarWidth) {
+					// Добавляем ему класс active
+					sidebar.addClass('active');
+
+					var firstClick = true;
+
+					// Скрипт который будет закрывать sidebar при клике на любое место
+					$(document).bind('click.myEvent', function(e) {
+						if (!firstClick && $(e.target).closest('.sidebar').length == 0) {
+							// Удаляем класс active
+							sidebar.removeClass('active');
+							// Удаляем класс active
+							$('.header, .content').removeClass('active');
+							$(document).unbind('click.myEvent');
+						}
+						firstClick = false;
+					});
+				}
+				e.preventDefault();
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="container clearfix header">
+			<div class="icon-menu">
+				<span class="divide"></span>
+				<span class="divide"></span>
+				<span class="divide"></span>
+			</div>
+		</div>
+
+		<div class="container clearfix">
+			<div class="sidebar">
+				<div class="scroll">
+
+				</div>
+			</div>
+			<div class="content"></div>
+		</div>
+
+		<div class="footer"></div>
+	</div>
+</body>
